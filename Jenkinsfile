@@ -1,10 +1,19 @@
-/* Requires the Docker Pipeline plugin */
 pipeline {
-    agent { docker { image 'maven:3.9.11-eclipse-temurin-21-alpine' } }
+    // "agent any" = utilise l'agent Jenkins par défaut (ton conteneur jenkins)
+    agent any
+
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                sh 'mvn --version'
+                // 1ère étape : une seule commande
+                sh 'echo "Hello World"'
+
+                // 2ème étape : plusieurs commandes dans un bloc multi-ligne
+                sh '''
+                    echo "Multiline shell steps works too"
+                    echo "On est dans le conteneur Jenkins"
+                    ls -lah
+                '''
             }
         }
     }
